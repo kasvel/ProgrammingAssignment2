@@ -28,7 +28,7 @@ makeCacheMatrix <- function(x = matrix()) {
   #now, lets make the list with all the options as in the example
   #This list is the "special ""matrix"" object" asked for in the assignment. It is obviously NOT
   #a matrix, but since the assignment was vague about what exaclty the function was supposed to 
-  #return I decided to keep it the same as in the example
+  #return I decided to keep it the same as in the example.
   
   list(set = set, get = get,
        setinverse = setinverse,
@@ -42,19 +42,31 @@ makeCacheMatrix <- function(x = matrix()) {
 
 
 cacheSolve <- function(x, ...) {
-  
   ## Return a matrix that is the inverse of 'x'
+    
+  #here it calls the getinverse function defined in the list x. If the matrix in x is new
+  #the output will be new, if not it will the inverse of the matrix
+  invmatrix <- x$getinverse()  
   
-  
-  invmatrix <- x$getinverse() #
-  
+  #here I check if it is null
   if(!is.null(invmatrix)) {
+    #if it is not  null, then it returns the inverse in memory and gets out of the function
     message("getting cached data")
     return(invmatrix)
   }
-  data <- x$get()
-  message("calculating inverse")
+  
+  #this part only happens if it skipped the "if" above
+  #Then it gets the data 
+  data <- x$get() 
+  
+  #message("calculating inverse") 
+  #this message is useful to show that it only does this when the matrix is new but i
+  #commented it out to make the outputs the same as in the examples provided by the TA
+  
+  #it calculates ithe inverse of the matrix  
   invmatrix <- solve(data)
+  #it sets the value of the inverse in the cache 
   x$setinverse(invmatrix)
+  #it prints the inverse of the matrix
   invmatrix
 }
